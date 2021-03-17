@@ -1,0 +1,41 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="Eslint" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="PyPackageRequirementsInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredPackages">
+        <value>
+          <list size="8">
+            <item index="0" class="java.lang.String" itemvalue="scipy" />
+            <item index="1" class="java.lang.String" itemvalue="tensorflow" />
+            <item index="2" class="java.lang.String" itemvalue="nltk" />
+            <item index="3" class="java.lang.String" itemvalue="h5py" />
+            <item index="4" class="java.lang.String" itemvalue="Keras" />
+            <item index="5" class="java.lang.String" itemvalue="theano" />
+            <item index="6" class="java.lang.String" itemvalue="zope.interface" />
+            <item index="7" class="java.lang.String" itemvalue="scikit_learn" />
+          </list>
+        </value>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyPep8NamingInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <option name="ignoredErrors">
+        <list>
+          <option value="N806" />
+        </list>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredIdentifiers">
+        <list>
+          <option value="int.__setitem__" />
+          <option value="ch03.student_house.student_sys.student_sys.urls.student" />
+          <option value="object.get_context_data" />
+          <option value="ch04.typeidea.typeidea.typeidea.urls.config" />
+          <option value="ch04.typeidea.typeidea.typeidea.urls.blog" />
+          <option value="list.all" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>
