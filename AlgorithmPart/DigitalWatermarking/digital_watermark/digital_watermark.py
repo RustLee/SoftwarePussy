@@ -32,6 +32,30 @@ class WaterMark:
     def read_img(self, filename):
         # 读入图片->YUV化->加白边使像素变偶数->四维分块
         self.img = cv2.imread(filename).astype(np.float32)
+        # self.img = frame.astype(np.float32)
+        self.img_shape = self.img.shape[:2]
+
+        # 如果不是偶数，那么补上白边
+        self.img_YUV = cv2.copyMakeBorder(cv2.cvtColor(self.img, cv2.COLOR_BGR2YUV),
+                                          0, self.img.shape[0] % 2, 0, self.img.shape[1] % 2,
+                                          cv2.BORDER_CONSTANT, value=(0, 0, 0))
+
+        self.ca_shape = [(i + 1) // 2 for i in self.img_shape]
+
+        self.ca_block_shape = (self.ca_shape[0] // self.block_shape[0], self.ca_shape[1] // self.block_shape[1],
+                               self.block_shape[0], self.block_shape[1])
+        strides = 4 * np.array([self.ca_shape[1] * self.block_shape[0], self.block_shape[1], self.ca_shape[1], 1])
+
+        for channel in range(3):
+            self.ca[channel], self.hvd[channel] = dwt2(self.img_YUV[:, :, channel], 'haar')
+            # 转为4维度
+            self.ca_block[channel] = np.lib.stride_tricks.as_strided(self.ca[channel].astype(np.float32),
+                                                                     self.ca_block_shape, strides)
+
+    def read_img_frame(self, frame):
+        # 读入图片->YUV化->加白边使像素变偶数->四维分块
+        self.img = frame.astype(np.float32)
+        # self.img = frame.astype(np.float32)
         self.img_shape = self.img.shape[:2]
 
         # 如果不是偶数，那么补上白边
@@ -56,6 +80,7 @@ class WaterMark:
         self.wm = cv2.imread(filename)[:, :, 0]
         # 加密信息只用bit类，抛弃灰度级别
         self.wm_bit = self.wm.flatten() > 128
+        print(self.wm_bit.size)
 
     def read_wm(self, wm_content, mode='img'):
         if mode == 'img':
@@ -66,6 +91,7 @@ class WaterMark:
         else:
             self.wm_bit = np.array(wm_content)
         self.wm_size = self.wm_bit.size
+        # print(self.wm_bit.size)
         # 水印加密:
         np.random.RandomState(self.password_wm).shuffle(self.wm_bit)
 
