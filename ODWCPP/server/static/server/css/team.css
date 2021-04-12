@@ -1,0 +1,71 @@
+html{
+    height: 100%;
+}
+body{
+    height: 100vh;
+}
+*{
+    margin: 0;
+}
+h1{
+    font-family: 'Lato', 'sans-serif';
+    font-weight: 300;
+    font-size: 48px;
+    transform: translateY(-180%);
+}
+.header{
+    height: 9%;
+    position: relative;
+    text-align: center;
+    color: wheat;
+    border-bottom: 1px rosybrown dotted;
+}
+.lnner-header{
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.container{
+
+    width: 100%;
+    height: 91%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.title h2{
+    color: rgba(58, 56, 175, 0.877);
+    font-size: 40px;
+    font-weight: 800;
+}
+.introduction{
+    height: 500px;
+    width: 1400px;
+    margin-top: 40px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+.mem{
+    height: 95%;
+    width: 310px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+.mem img {
+    width: 100%;
+}
+.mem h2{
+    color: rgba(189, 93, 93, 0.904);
+    font-size: 25px;
+    font-weight: 800;
+    margin-top: 15px;
+}
+

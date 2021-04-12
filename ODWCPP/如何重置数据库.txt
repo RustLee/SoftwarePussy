@@ -1,0 +1,8 @@
+有些时候，如果遇到bug，可以尝试重置数据库
+
+1. 删除db.sqlite
+2. 删除server\migrations里面除了__init__.py的其他文件
+3. python manage.py makemigrations
+4. python manage.py migrate
+
+之后注册新用户即可

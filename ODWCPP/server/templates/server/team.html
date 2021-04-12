@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wave</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+
+    <link rel="stylesheet" href="../../static/server/css/team.css">
+    <style>
+    .el-menu-demo{
+        position: absolute !important;
+        top: 0 !important;
+        display: flex !important;
+        justify-content: flex-end !important;
+        width: 100% !important;
+        border: 0 !important;
+        background:none !important;
+        padding-top: 5px;
+    }
+    .main_menu_item{
+        font-size: 23px !important;
+        font-family:"幼圆" !important;
+    }
+    .main_menu_item:hover{
+        background-color:rgba(97, 91, 172, 0.6) !important;
+        border: 2px rgba(52, 111, 221, 0.658) solid !important;
+    }
+    </style>
+</head>
+<body>
+    <div id="app" style="height: 100%;">
+    <div class="header">
+        <!-- 标题 -->
+        <div class="lnner-header">
+            <!-- vue部分 -->
+            <el-menu class="el-menu-demo" mode="horizontal" 
+            background-color="rgba(255,255,255,0)" active-text-color="rgb(77,115,235)" text-color="rgb(77,115,209)" default-active='3'>
+                    <el-menu-item class="main_menu_item" style="margin-left:30px" index="1">添加数字水印</el-menu-item>
+                    <el-menu-item class="main_menu_item"  index="2">查看数字水印</el-menu-item>
+                    <el-menu-item class="main_menu_item"  index="3">关于我们</el-menu-item>
+                    <el-menu-item class="main_menu_item" style="margin-right: 100px;margin-left: 100px;" index="4">登录</el-menu-item>
+            </el-menu>
+        </div>
+    </div>
+    <div class="container">
+        <div class="title"><h2>OUR TEAM</h2></div>
+        <div class="introduction">
+            <div class="mem">
+                <img src="./image/re0.jpg" alt="">
+                <h2>mem1</h2>
+                <p>xxxxxxxxxxx</p>
+                <p>xxxxxxxxxxxxxxxx</p>
+                <p>xxxxxxxxxxxxxxxxxxxxx</p>
+            </div>
+            <div class="mem">
+                <img src="./image/re0_all.jpg" alt="">
+                <h2>mem2</h2>
+                <p>xxxxxxxxxxx</p>
+                <p>xxxxxxxxxxxxxxxx</p>
+                <p>xxxxxxxxxxxxxxxxxxxxx</p>
+            </div>
+            <div class="mem">
+                <img src="./image/蕾姆.jpg" alt="">
+                <h2>mem3</h2>
+                <p>xxxxxxxxxxx</p>
+                <p>xxxxxxxxxxxxxxxx</p>
+                <p>xxxxxxxxxxxxxxxxxxxxx</p>
+            </div>
+            <div class="mem">
+                <img src="./image/aimi.jpg" alt="">
+                <h2>mem4</h2>
+                <p>xxxxxxxxxxx</p>
+                <p>xxxxxxxxxxxxxxxx</p>
+                <p>xxxxxxxxxxxxxxxxxxxxx</p>
+            </div>
+        </div>
+    </div>
+    
+</div>
+</body>
+
+<script>
+    new Vue({
+        el: '#app',
+        data: function () {
+            return { visible: false }
+        }
+    })
+
+</script>
+
+</html>

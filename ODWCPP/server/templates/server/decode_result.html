@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<head>
+<script type="text/javascript" src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script>
+function fun(){
+            //alert("进入函数")
+            $("#download").hide();
+            $.ajax({
+                url: "{% url 'server:start_processing' %}",
+                type: 'get',
+            });
+
+            var sitv = setInterval(
+                            function(){
+                                $.ajax({
+                                url: "{% url 'server:show_progress' %}",
+                                type: 'get',
+                                success:
+                                    function(response){
+                                    //alert("in function")
+                                        progress = response;
+                                        //alert(progress);
+                                        //alert("hey1");
+                                        //document.getElementById('progtext').text("当前进度: " + str(progress))
+                                        if (progress == '1'){
+                                            $("#download").show();
+                                            document.getElementById("title").innerHTML = "已解析出数字水印，请点击下方的按钮下载"
+                                            clearInterval(sitv);
+                                        }
+                                    }
+                                });
+                            }, 2000);
+        }
+window.onload = function(){
+                    fun();
+                }  
+
+</script>
+</head>
+
+<body>
+<h1 id="title">正在解析数字水印</h1>
+
+{% block branding %}
+<a id="download" href="{% url 'server:file_download' %}">下载</a>
+{% endblock %}
+
+
+</body>
