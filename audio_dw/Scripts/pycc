@@ -1,0 +1,3 @@
+#!D:\File\Program\Python\Digital_watermarking\Scripts\python.exe
+from numba.pycc import main
+main()
