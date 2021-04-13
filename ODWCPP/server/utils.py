@@ -11,7 +11,7 @@ from .models import UserAction, digitalwork_path, output_path
 from DigitalWatermarking.digital_watermark.digital_watermark import WaterMark
 from DigitalWatermarking.digital_watermark.video2image import VideoFrame
 from DigitalWatermarking.digital_watermark.qrcoder_create import QrcodeMaker
-
+from audio_dw.audio import audio_watermark
 
 def encode_handeler(action_id):
     action = UserAction.objects.get(id=action_id)
@@ -47,6 +47,14 @@ def encode_handeler(action_id):
         tmp_path = vf.video2image_encode(wm_path)
         vf.image2video(embed_path)
         del_file(tmp_path)
+    
+    elif ftype == 'audio':
+        aw = audio_watermark()
+        aw.add_process(upload_file, embed_path, msg)
+    
+    else:
+        raise ValueError("ftpye is {}, but it should be in \{video, image, audio\}"%ftype)
+
 
 
     
@@ -92,26 +100,14 @@ def decode_handeler(action_id):
         bwm1.extract(filename=embedded_file, wm_shape=(118, 118), out_wm_name=wm_path)
     elif ftype == 'video':
         vf = VideoFrame(embedded_file)
-        vf.video2image_decode(wm_path)
-
-
+        tmp_path = vf.video2image_decode(wm_path)
+        del_file(tmp_path)
+    elif ftype == 'audio':
+        aw = audio_watermark()
+        aw.draw_process(embedded_file, wm_path)
+        
     return wm_path
 
-    # #把整个文件夹内的文件打包
-    # zipName = time.strftime("%Y-%m-%d_%H-%M-%S", time.localtime())+ '.zip'
-    # zipFilePath = os.path.join(output_file_path, zipName)
-    # f = zipfile.ZipFile( zipFilePath, 'w', zipfile.ZIP_DEFLATED )
-    # #print(os.getcwd())
-    # pre_path = os.getcwd()
-    # os.chdir(os.path.join(output_path, username))
-    # #print(os.getcwd())
-    # for dirpath, dirnames, filenames in os.walk( output_filename ):
-    #     for filename in filenames:
-    #         if filename != zipName:
-    #             f.write(os.path.join(dirpath,filename))
-    # f.close()
-    # os.chdir(pre_path)
-    # return zipFilePath
 
 
 def getFileFormat(filename):

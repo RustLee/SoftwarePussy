@@ -50,6 +50,7 @@ class VideoFrame:
 
         self.cap.release()
         print('processed {} images'.format(frame_count))
+        return tmp_path
 
     def image2video(self, filepath):
         forrcc = cv2.VideoWriter_fourcc(*'mp4v')
