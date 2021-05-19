@@ -97,8 +97,11 @@ def start_processing(request):
         #path = 'data/download/test.txt'
         print("~~~~~~~~~~~~~~~~~~~~~~~~~~start encoding")
         path = encode_handeler(action_id)
-        #request.session['zipFile'] = path
-        isdone = 1
+        if not path:
+            print("error!")
+            isdone = -1
+        else:
+            isdone = 1
     else:
         print("~~~~~~~~~~~~~~~~~~~~~~~~~start decoding")
         path = decode_handeler(action_id)
@@ -110,6 +113,8 @@ def show_progress(request):
     print("--------------isdone:{}".format(isdone))
     if isdone == 1:
         return HttpResponse('1')
+    elif isdone == -1:
+        return HttpResponse('-1')
     else:
         return HttpResponse('0')
 
@@ -170,6 +175,9 @@ def decoderesult_index(request):
 
 def teamindex(request):
     return render(request, 'server/team.html')
+
+def errorindex(request):
+    return render(request, 'server/error.html')
 
 # def upload_file(request):
 #     if request.method == 'POST':

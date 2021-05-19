@@ -29,7 +29,7 @@ output_path = ".\\data\\download"
 
 supported_formats = {
     'image': ('png', 'jpg', 'jepg'),
-    'audio': ('wav', 'mp3'),
+    'audio': ('wav',),
     'video': ('mp4',)
 }
 

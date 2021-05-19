@@ -1,0 +1,43 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>上传您的数字作品来添加水印</title>
+</head>
+
+<style> 
+    .warning{color:#F00} 
+</style> 
+
+<body>
+    <h1>上传您的数字作品来添加水印</h1>
+    <form method="post" enctype="multipart/form-data" >
+        <p>选择要添加水印的文件：</p>
+        {{ form.filename }}
+
+        <p>
+        {{ form.option.0 }}<br>
+        {{ form.wm_str}}<br>
+
+        {% if no_str %}
+        <div class='warning'>{{message}}</div>
+        {% endif %}
+
+        {{ form.option.1 }}<br>
+        {{ form.wm_img }}<br>
+
+        {% if no_img %}
+        <div class='warning'>{{message}}</div>
+        {% endif %}
+
+        </p>
+
+        <input type="submit" value="Submit" />
+    </form>
+
+    {% if unsupport_type %}
+    <div class='warning'>{{message}}</div>
+    {% endif %}
+
+
+</body>
+</html>

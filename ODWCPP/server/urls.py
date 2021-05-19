@@ -14,4 +14,5 @@ urlpatterns = [
     path('decode/result/', views.decoderesult_index, name='decoderesult_index'),
     path('decode/', views.decodeindex, name='decodeindex'),
     path('team/', views.teamindex, name='teamindex'),
+    path('error/', views.errorindex, name='errorindex'),
 ]

@@ -2,6 +2,7 @@
 import copy
 import numpy as np
 import cv2
+import os
 from pywt import dwt2, idwt2
 from multiprocessing.dummy import Pool as ThreadPool
 
@@ -29,11 +30,27 @@ class WaterMark:
         self.part_shape = self.ca_block_shape[:2] * self.block_shape
         self.block_index = [(i, j) for i in range(self.ca_block_shape[0]) for j in range(self.ca_block_shape[1])]
 
-    def read_img(self, filename):
-        # 读入图片->YUV化->加白边使像素变偶数->四维分块
-        self.img = cv2.imread(filename).astype(np.float32)
-        # self.img = frame.astype(np.float32)
-        self.img_shape = self.img.shape[:2]
+    def read_img(self, filename, padding=False, origin_shape=(1200, 1920)):
+        #补全尺寸太小的图片
+        if padding:
+            output_img = cv2.imread(filename).astype(np.float32)
+            output_img_shape = output_img.shape    
+            while output_img_shape[0] < origin_shape[0]:
+                output_img = np.concatenate([output_img, output_img[:origin_shape[0] - output_img_shape[0], :, :]], axis=0)
+                output_img_shape = output_img.shape
+            while output_img_shape[1] < origin_shape[1]:
+                output_img = np.concatenate([output_img, output_img[:, :origin_shape[1] - output_img_shape[1], :]], axis=1)
+                output_img_shape = output_img.shape
+            self.img = output_img
+            self.img_shape = output_img_shape
+            print("save to padding_imgs")
+            print(os.getcwd())
+            cv2.imwrite('./img.jpg', output_img)
+        else:
+            # 读入图片->YUV化->加白边使像素变偶数->四维分块
+            self.img = cv2.imread(filename).astype(np.float32)
+            # self.img = frame.astype(np.float32)
+            self.img_shape = self.img.shape[:2]
 
         # 如果不是偶数，那么补上白边
         self.img_YUV = cv2.copyMakeBorder(cv2.cvtColor(self.img, cv2.COLOR_BGR2YUV),
@@ -159,7 +176,8 @@ class WaterMark:
 
     def extract(self, filename, wm_shape, out_wm_name=None, mode='img'):
         self.wm_size = np.array(wm_shape).prod()
-        self.read_img(filename)
+        self.read_img(filename=filename)
+
         self.init_block_index()
 
         wm_extract = np.zeros(shape=(3, self.block_num))  # 3个channel，length 个分块提取的水印，全都记录下来
