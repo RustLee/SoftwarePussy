@@ -1,4 +1,6 @@
 import os
+import sys
+#sys.path.append('../')
 import cv2
 from PIL import Image
 from .digital_watermark import WaterMark
@@ -25,12 +27,12 @@ class VideoFrame:
             frame_count += 1
             succeed, frame = self.cap.read()
             if frame is not None:
-                if frame_count % 100 == 0:
+                if frame_count % 53 == 0:
                     self.bwm.read_img_frame(frame)
                     self.bwm.read_wm(wm_path)
-                    self.bwm.embed(tmp_path + '%d.jpg' % frame_count)
+                    self.bwm.embed(tmp_path + '%d.png' % frame_count)
                 else:
-                    cv2.imwrite(tmp_path + '%d.jpg' % frame_count, frame)
+                    cv2.imwrite(tmp_path + '%d.png' % frame_count, frame)
         self.cap.release()
         print('processed {} images'.format(frame_count))
         return tmp_path
@@ -42,10 +44,10 @@ class VideoFrame:
             frame_count += 1
             succeed, frame = self.cap.read()
             if frame is not None:
-                if frame_count % 100 == 0:
+                if frame_count % 53 == 0:
                     self.bwm.read_img_frame(frame)
-                    cv2.imwrite(tmp_path + '%d.jpg' % frame_count, frame)
-                    self.bwm.extract(tmp_path + '%d.jpg' % frame_count, wm_shape=(118, 118), out_wm_name=wm_path )
+                    cv2.imwrite(tmp_path + '%d.png' % frame_count, frame)
+                    self.bwm.extract(tmp_path + '%d.png' % frame_count, wm_shape=(117, 117), out_wm_name=wm_path )
                     break
 
         self.cap.release()
@@ -61,7 +63,7 @@ class VideoFrame:
         pre_path = os.getcwd()
         os.chdir(tmp_path)
         for image in range(len(images)):
-            image_file = str(image + 1) + '.jpg'
+            image_file = str(image + 1) + '.png'
             try:
                 frame = cv2.imread(image_file)
                 vw.write(frame)
@@ -75,8 +77,8 @@ class VideoFrame:
 
 
 if __name__ == '__main__':
-    filepath = '../video/test_video_2.mp4'
+    filepath = r"C:\Users\Haolin\Desktop\2021-05-21_15-37-53\2021-05-21_15-37-53\encoded_file.mp4"
     vf = VideoFrame(filepath)
     # vf.video2image_encode()
     # vf.image2video('../video/test_video_2.mp4')
-    vf.video2image_decode()
+    vf.video2image_decode(r"C:\Users\Haolin\Desktop\2021-05-21_15-37-53\2021-05-21_15-37-53\wm.png")

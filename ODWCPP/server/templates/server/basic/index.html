@@ -10,7 +10,7 @@
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://unpkg.com/element-ui/lib/index.js"></script>
 
-    <link rel="stylesheet" href="../../static/server/css/index.css">
+    
     <style>
     .el-menu-demo{
         position: absolute !important;
@@ -23,12 +23,161 @@
         padding-top: 5px;
     }
     .main_menu_item{
-        font-size: 25px !important;
-        font-family:"楷体" !important;
+        font-size: 23px !important;
+        font-family:"幼圆" !important;
     }
     .main_menu_item:hover{
-        background-color:rgba(231, 35, 172, 0.6) !important;
-        border: 2px rgba(100, 18, 75, 0.658) solid !important;
+        background-color:rgba(97, 91, 172, 0.6) !important;
+        border: 2px rgba(52, 111, 221, 0.658) solid !important;
+    }
+    html{
+        height: 100%;
+    }
+    body{
+        height: 100vh;
+    }
+    *{
+        margin: 0;
+        user-select: none;
+    }
+    h1{
+        font-family: 'Lato', 'sans-serif';
+        font-weight: 300;
+        font-size: 48px;
+        transform: translateY(-180%);
+    }
+    .header{
+        position: relative;
+        text-align: center;
+        background: linear-gradient(60deg, rgba(36, 27, 102, 0.842) 0%, rgba(157, 161, 202, 0.452) 100%);
+        color: wheat;
+    }
+    .lnner-header{
+        height: 75vh;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .lnner-header h1{
+        position: relative;
+        -webkit-box-reflect: below -12px linear-gradient(transparent , rgba(245,222,179,0.3));
+    }
+    .lnner-header h1 span{
+        position: relative;
+        display: inline-block;
+        animation: wave 3.5s ease-in-out infinite;
+        animation-delay: calc(0.03s * var(--i));
+        user-select: none;
+    }
+    @keyframes wave{
+        0%{
+            transform: translateY(0px);
+        }
+        12%{
+            transform: translateY(-30px);
+        }
+        24%,100%{
+            transform: translateY(0px);
+        }
+    }
+    .img_box{
+        position: absolute;
+        top: 450px;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        width: 100%;
+        height: 500px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transform-origin: center bottom;
+    }
+    .img_container{
+        margin-top: 50px;
+        width: 400px;
+        height: 400px;
+        position: relative;
+    }
+    .image{
+        position: absolute;
+        left: 0;
+        top: 0;
+        box-shadow: 5px 4px 10px 0 rgba(95, 100, 141, 0.842);
+        border: 1px skyblue solid;
+        width: 350px;
+        transition: all 0.5s;
+    }
+    #pic_no{
+        width: 350px;
+        color: silver;
+        position: absolute;
+        top: 270px;
+        font-size: 25px;
+        left: 50%;
+        transform: translateX(-57%);
+    }
+    .middle{
+        left: 0;
+        transform:scale(1);
+        z-index:5;
+    }
+    .left{
+        left: -230px;
+        transform:scale(0.7);
+        z-index:1;
+        filter: blur(1.5px);
+    }
+    .right{
+        left: 230px;
+        transform:scale(0.7);
+        z-index:1;
+        filter: blur(1.5px);
+    }
+    /* .lnner-header>h1{
+        animation: move-forever 25s cubic-bezier(.55,.5,.45,.5) infinite;
+    } */
+    .waves{
+        position:relative;
+        width: 100%;
+        height: 15vh;
+        margin-bottom: -7px;
+        max-height: 150px;
+        min-height: 100px;
+    }
+    .parallax>use{
+        animation: move-forever 25s cubic-bezier(.55,.5,.45,.5) infinite;
+    }
+    .parallax>use:nth-child(1){
+        animation-delay: -2s;
+        animation-duration: 7s;
+    }
+    .parallax>use:nth-child(2){
+        animation-delay: -3s;
+        animation-duration: 10s;
+    }
+    .parallax>use:nth-child(3){
+        animation-delay: -4s;
+        animation-duration: 13s;
+    }
+    .parallax>use:nth-child(4){
+        animation-delay: -5s;
+        animation-duration: 20s;
+    }
+    @keyframes move-forever{
+        0%{transform: translate3d(-90px, 0 ,0) }
+        100%{transform: translate3d(85px, 0 , 0) }
+    }
+    @media(max-width:768px){
+        .waves{
+            height: 40px;
+            min-height: 40px;
+        }
+        h1{
+            font-size: 24px;
+        }
     }
     </style>
 </head>
@@ -39,23 +188,23 @@
         <div class="lnner-header">
             <!-- vue部分 -->
             <el-menu class="el-menu-demo" mode="horizontal" 
-            background-color="rgba(255,255,255,0)" active-text-color="rgba(255,255,255,0.5)" text-color="rgb(255,182,241)">
-                    <el-menu-item class="main_menu_item" style="margin-left:30px" index="1"><a href="{% url 'server:encodeindex' %}">添加数字水印</a></el-menu-item>
-                    <el-menu-item class="main_menu_item"  index="2"><a href="{% url 'server:decodeindex' %}">查看数字水印</a></el-menu-item>
-                    <el-menu-item class="main_menu_item"  index="3"><a href="{% url 'server:teamindex' %}">关于我们</a></el-menu-item>
-                    {% if is_login %}
-                    <el-menu-item class="main_menu_item" style="margin-right: 100px;margin-left: 100px;" index="4"><a href="/login/">登录</a></el-menu-item>
-                    {% else %}
-                    <el-menu-item class="main_menu_item" style="margin-right: 100px;margin-left: 100px;" index="4"><a href="/logout/">登出</a></el-menu-item>
-                    {% endif %}
+            background-color="rgba(255,255,255,0)" active-text-color="rgba(77,115,209,0.5)" text-color="rgb(77,115,209)">
+                <el-menu-item class="main_menu_item" style="margin-left:30px;" index="1"><a href="{% url 'server:encodeindex' %}">添加数字水印</a></el-menu-item>
+                <el-menu-item class="main_menu_item"  index="2"><a href="{% url 'server:decodeindex' %}">查看数字水印</a></el-menu-item>
+                <el-menu-item class="main_menu_item"  index="3"><a href="{% url 'server:teamindex' %}">关于我们</a></el-menu-item>
+                {% if is_login %}
+                <el-menu-item class="main_menu_item" style="margin-right: 100px;margin-left: 100px;" index="4"><a href="/login/">登录</a></el-menu-item>
+                {% else %}
+                <el-menu-item class="main_menu_item" style="margin-right: 100px;margin-left: 100px;" index="4"><a href="/logout/">登出</a></el-menu-item>
+                {% endif %}
             </el-menu>
 
             <h1>Online Digital Works Copyright Protection Platform</h1>
             <div class="img_box">
                 <div class="img_container">
-                    <img class="image left" data-w="pic1" src="../../static/server/images/img1.jpg" alt="">
-                    <img class="image middle" data-w="pic2" src="../../static/server/images/img2.jpg" alt="">
-                    <img class="image right" data-w="pic3" src="../../static/server/images/img3.jpg" alt="">
+                    <img class="image left" data-w="pic1" src="../../static/server/image/re0.jpg" alt="">
+                    <img class="image middle" data-w="pic2" src="../../static/server/image/蕾姆.jpg" alt="">
+                    <img class="image right" data-w="pic3" src="../../static/server/image/re0.jpg" alt="">
                 </div>
                 <h3 id="pic_no">pic1</h3>
             </div>
@@ -68,17 +217,16 @@
                     <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"></path>
                 </defs>
                 <g class="parallax">
-                    <use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(255, 183, 242,0.7"></use>
-                    <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(255, 183, 242,0.5)"></use>
-                    <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(255, 183, 242,0.3)"></use>
-                    <use xlink:href="#gentle-wave" x="48" y="7" fill="rgba(255, 183, 242,0.1)"></use>
+                    <use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(200,200,255, 0.252)"></use>
+                    <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(215,215,255, 0.452)"></use>
+                    <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(235,235,255, 0.652)"></use>
+                    <use xlink:href="#gentle-wave" x="48" y="7" fill="rgba(250,250,255, 0.852)"></use>
                 </g>
             </svg>
-
         </div>
+
     </div>
-    <div style="background-color:rgb(255,182,242);height: 20.6%;margin-top: -0.5%;">
-    </div>
+
 </div>
 </body>
 
@@ -89,6 +237,7 @@
             return { visible: false }
         }
     })
+    // 图片轮播
     const images = document.querySelectorAll('.image');
     for (let i = 0 ; i < images.length ; i ++){
         images[i].addEventListener('click',function(){
@@ -105,6 +254,19 @@
             right.classList.remove('left','middle','right');
             right.classList.add('right');
         })
+    }
+    // 文字悦动
+    const text = document.querySelector('.lnner-header h1');
+    text.innerHTML = text.textContent.replace(/\S/g,"<span>$&</span>");
+    text_child = text.childNodes;
+    console.log(text_child);
+    let count = 0;
+    for(let i = 0; i < text_child.length ; i ++){
+        console.log(count);
+        if(text_child[i].tagName == "SPAN"){
+            text_child[i].style = "--i:" + count;
+            count += 1;
+        }
     }
 </script>
 

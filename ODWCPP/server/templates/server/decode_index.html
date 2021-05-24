@@ -130,6 +130,7 @@
         width: 900px;
         height: 600px;
         background-color: white;
+        transform: translateY(-15%);
     }
     #encrypto{
         width: 100vw;
@@ -397,8 +398,8 @@
         <!-- vue部分 -->
         <el-menu class="el-menu-demo" mode="horizontal" style="background-color: rgba(255, 255, 255, 1) !important;"
         background-color="rgba(255,255,255,0)" active-text-color="rgba(77,115,209,0.5)" text-color="rgb(0,0,0)" default-active="2">
-                <span>img</span>
-                <el-menu-item class="main_menu_item" style="margin-left:30px;" index="1"><a href="{% url 'server:encodeindex' %}">添加数字水印</a></el-menu-item>
+                <el-menu-item class="main_menu_item" style="margin-left:30px;" index="0"><a href="{% url 'login:index' %}">首页</a></el-menu-item>
+                <el-menu-item class="main_menu_item"  index="1"><a href="{% url 'server:encodeindex' %}">添加数字水印</a></el-menu-item>
                 <el-menu-item class="main_menu_item"  index="2"><a href="{% url 'server:decodeindex' %}">查看数字水印</a></el-menu-item>
                 <el-menu-item class="main_menu_item"  index="3"><a href="{% url 'server:teamindex' %}">关于我们</a></el-menu-item>
                 {% if is_login %}
@@ -411,7 +412,7 @@
             <div class="wrap"></div>
         </div>
         <el-button plain class="btn">
-            加密介绍
+            解密介绍
         </el-button>
         <!-- 蒙版 -->
         <div class="back">
@@ -424,7 +425,7 @@
                         <el-carousel-item v-for="item in 3" :key="item" >
                         </el-carousel-item>
                         <el-carousel-item  :key="4" style="display: flex;justify-content: flex-end;align-items: flex-end;">
-                            <el-button style="margin-bottom: 35px;margin-right: 80px;" @click="close_tips">12345</el-button>
+                            <el-button style="margin-bottom: 35px;margin-right: 80px;" @click="close_tips">现在解密！</el-button>
                         </el-carousel-item>
                     </el-carousel>
                 </div>
@@ -469,16 +470,11 @@
             <div class="login_form">
                 <img src="./image/login_header.png" alt="">
                 <i id="close_login_form" class="el-icon-close"></i>
-                <span>介 绍</span>
+                <span>解 密 介 绍</span>
                 <div class="line"></div>
-                <p>算法介绍</p>
-                <p>xxxxxxxxxxxxxxxxxxxxxxxxxxxx</p>
-                <p>xxxxxxxxxxxxxxxxx</p>
-                <p>xxxxxxxxxxxxxxxxx</p>
-                <p>xxxxxxxxxxxxxxxxx</p>
-                <p>xxxxxxxxxxxxxxxxx</p>
-                <p>xxxxxxxxxxxxxxxxx</p>
-                <p>xxxxxxxxxxxxxxxxx</p>
+                
+                <p style="width: 80%;margin-top: 30px;text-indent:2em;">上传您的已加密文件，查看数字水印</p>
+                
                 <!-- <form action="">
                     <input type="text" name="username" id="username" placeholder="用户名">
                     <input style="transform: translateY(-25px);" type="password" name="password" id="password" placeholder="密码">
@@ -558,11 +554,11 @@
         }
         // if()
     };
-    $(document).on('scroll',scrListenerfunc);
-    $('#uplode_window').on('click',function(){
-        $('.back').css("display","none");
-        $('body').css({"overflow":'visable'});
-    });
+    // $(document).on('scroll',scrListenerfunc);
+    // $('#uplode_window').on('click',function(){
+    //     $('.back').css("display","none");
+    //     $('body').css({"overflow":'visable'});
+    // });
 
 
     $("#id_wm_str").hover(function(){
@@ -579,16 +575,16 @@
 
 
     // 介绍弹窗
-    $('.btn').on('click',function(){
-        $('.login_form_wrap').css('display','flex');
-        $('.bg_wrap').css('display','block');
-    })
-    $('#close_login_form').on('click',function(){
-        $('.login_form_wrap').css('display','none');
-    })
-    $(".bg_wrap").click(function(){
-        console.log('123');
-        $('.login_form_wrap').css("display","none"); 			
-    });
+    // $('.btn').on('click',function(){
+    //     $('.login_form_wrap').css('display','flex');
+    //     $('.bg_wrap').css('display','block');
+    // })
+    // $('#close_login_form').on('click',function(){
+    //     $('.login_form_wrap').css('display','none');
+    // })
+    // $(".bg_wrap").click(function(){
+    //     console.log('123');
+    //     $('.login_form_wrap').css("display","none"); 			
+    // });
 </script>
 </html>

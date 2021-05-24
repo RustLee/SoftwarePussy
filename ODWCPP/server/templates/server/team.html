@@ -40,8 +40,8 @@
             <!-- vue部分 -->
             <el-menu class="el-menu-demo" mode="horizontal" style="background-color: rgba(255, 255, 255, 1) !important;"
         background-color="rgba(255,255,255,0)" active-text-color="rgba(77,115,209,0.5)" text-color="rgb(0,0,0)">
-                <span>img</span>
-                <el-menu-item class="main_menu_item" style="margin-left:30px;" index="1"><a href="{% url 'server:encodeindex' %}">添加数字水印</a></el-menu-item>
+                <el-menu-item class="main_menu_item" style="margin-left:30px;" index="0"><a href="{% url 'login:index' %}">首页</a></el-menu-item>
+                <el-menu-item class="main_menu_item"  index="1"><a href="{% url 'server:encodeindex' %}">添加数字水印</a></el-menu-item>
                 <el-menu-item class="main_menu_item"  index="2"><a href="{% url 'server:decodeindex' %}">查看数字水印</a></el-menu-item>
                 <el-menu-item class="main_menu_item"  index="3"><a href="{% url 'server:teamindex' %}">关于我们</a></el-menu-item>
                 {% if is_login %}
@@ -56,32 +56,32 @@
         <div class="title"><h2>OUR TEAM</h2></div>
         <div class="introduction">
             <div class="mem">
-                <img src="./image/re0.jpg" alt="">
-                <h2>mem1</h2>
-                <p>xxxxxxxxxxx</p>
-                <p>xxxxxxxxxxxxxxxx</p>
-                <p>xxxxxxxxxxxxxxxxxxxxx</p>
+                <img src="../../static/server/image/rustlee.jpg" alt="">
+                <h2>李秋阳</h2>
+                <div style="display:flex;flex-direction: row;"><p>github:&nbsp;</p><a href="https://github.com/RustLee">https://github.com/RustLee</a></div>
+                <p>李秋阳是本小组组长</p>
+                <p>主要负责图片加密、视频加密部分算法</p>
             </div>
             <div class="mem">
-                <img src="./image/re0_all.jpg" alt="">
-                <h2>mem2</h2>
-                <p>xxxxxxxxxxx</p>
-                <p>xxxxxxxxxxxxxxxx</p>
-                <p>xxxxxxxxxxxxxxxxxxxxx</p>
+                <img src="../../static/server/image/haolindeng.jpg" alt="">
+                <h2>邓浩霖</h2>
+                <div style="display:flex;flex-direction: row;"><p>github:&nbsp;</p><a href="https://github.com/Reflorescit">https://github.com/Reflorescit</a></div>
+                <p>主要负责后端部分，以及项目的整合</p>
+                <!-- <p>xxxxxxxxxxxxxxxxxxxxx</p> -->
             </div>
             <div class="mem">
-                <img src="./image/蕾姆.jpg" alt="">
-                <h2>mem3</h2>
-                <p>xxxxxxxxxxx</p>
-                <p>xxxxxxxxxxxxxxxx</p>
-                <p>xxxxxxxxxxxxxxxxxxxxx</p>
+                <img src="../../static/server/image/momo.gif" alt="">
+                <h2>莫允扬</h2>
+                <div style="display:flex;flex-direction: row;"><p>github:&nbsp;</p><a href="https://github.com/CMathmo">https://github.com/CMathmo</a></div>
+                <p>主要负责音频部分加密算法</p>
+                <!-- <p>xxxxxxxxxxxxxxxxxxxxx</p> -->
             </div>
             <div class="mem">
-                <img src="./image/aimi.jpg" alt="">
-                <h2>mem4</h2>
-                <p>xxxxxxxxxxx</p>
-                <p>xxxxxxxxxxxxxxxx</p>
-                <p>xxxxxxxxxxxxxxxxxxxxx</p>
+                <img src="../../static/server/image/cengturyw.jpg" alt="">
+                <h2>文圣楚</h2>
+                <div style="display:flex;flex-direction: row;"><p>gitee:&nbsp;</p><a href="https://gitee.com/wsc19991225">https://gitee.com/wsc19991225</a></div>
+                <p>主要负责前端</p>
+                <!-- <p>xxxxxxxxxxxxxxxxxxxxx</p> -->
             </div>
         </div>
     </div>

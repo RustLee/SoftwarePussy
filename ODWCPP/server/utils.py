@@ -11,6 +11,7 @@ from .models import UserAction, digitalwork_path, output_path
 from DigitalWatermarking.digital_watermark.digital_watermark import WaterMark
 from DigitalWatermarking.digital_watermark.video2image import VideoFrame
 from DigitalWatermarking.digital_watermark.qrcoder_create import QrcodeMaker
+from audio_dw.audio import audio_watermark
 
 from django.shortcuts import redirect
 from django.urls import reverse
@@ -23,6 +24,7 @@ def encode_handeler(action_id):
     upload_file = action.upload_filepath
     username = action.user.name
     ftype = action.upload_ftype
+    print('ftype!, ', ftype)
     fformat = action.upload_fformat
 
     output_filename =  time.strftime("%Y-%m-%d_%H-%M-%S", time.localtime())
@@ -34,7 +36,7 @@ def encode_handeler(action_id):
 
     wm_str = action.upload_watermark_string
     qr = QrcodeMaker()
-    msg = '@SP-Official' + '--' +  wm_str + '--' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+    msg = '@SP-Official' + '--' +  wm_str
     qr.qrcode_init(msg, wm_path)
     try:
         if ftype == 'image':
@@ -50,6 +52,13 @@ def encode_handeler(action_id):
             tmp_path = vf.video2image_encode(wm_path)
             vf.image2video(embed_path)
             del_file(tmp_path)
+        
+        elif ftype == 'audio':
+            print('----')
+            print(upload_file, embed_path)
+            aw = audio_watermark()
+            #加水印（大小限制中文不要超过225）
+            aw.add_process(upload_file, embed_path, wm_str)
 
 
         
@@ -96,10 +105,14 @@ def decode_handeler(action_id):
 
     if ftype == 'image':
         bwm1 = WaterMark(password_wm=1, password_img=1)
-        bwm1.extract(filename=embedded_file, wm_shape=(118, 118), out_wm_name=wm_path)
+        bwm1.extract(filename=embedded_file, wm_shape=(117, 117), out_wm_name=wm_path)
     elif ftype == 'video':
         vf = VideoFrame(embedded_file)
         vf.video2image_decode(wm_path)
+    elif ftype == 'audio':
+        aw = audio_watermark()
+        #测水印
+        aw.draw_process(embedded_file, wm_path)
         
 
 

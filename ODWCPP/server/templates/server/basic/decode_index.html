@@ -1,25 +1,594 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>上传数字作品来解析水印</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        a{
+            text-decoration: none;
+        }
+    .wrap {
+        margin-left: 1.5%;
+        width: 97%;
+        height: 700px;
+        /* background: linear-gradient(120deg, rgba(36, 27, 102, 0.842) 0%, rgba(157, 161, 202, 0.452) 100%); */
+        background: url(../../static/server/image/yw.jpg) no-repeat;
+        background-position: 0px -130px;
+        /* background-attachment: fixed; */
+        background-size: cover;
+        overflow-x: hidden;
+        clip-path: polygon(100% 0%, 100% 75%,  80% 75%,  75% 93%,  25% 93%,  20% 75%,  0% 75%,  0% 0%);
+        z-index: -1;
+    }
+    .wrap_border{
+        width: 100%;
+        height: 703px;
+        background: rgb(232,203,72);
+        background-attachment: fixed;
+        background-size: cover;
+        overflow-x: hidden; 
+        clip-path: polygon(100% 0%, 100% 77%,  80% 77%,  75.5% 94.3%,  24.5% 94.3%,  20% 77%,  0% 77%,  0% 0%);
+        z-index: -1;
+    }
+    .el-menu-demo{
+        height: 25px;
+        /* z-index: 1; */
+        /* position: absolute !important;
+        top: 0 !important; */
+        display: flex !important;
+        justify-content: flex-end !important;
+        width: 100% !important;
+        border: 0 !important;
+        background:none !important;
+        padding-top: 1px;
+    }
+    .main_menu_item{
+        height: 25px !important;
+        line-height: 15px !important;
+        font-size: 15px !important;
+        font-weight: 450 !important;
+        font-family:"幼圆" !important;
+        padding-top:3px ;
+    }
+    .main_menu_item:hover{
+        box-sizing: border-box;
+        height: 100%;
+        background-color:rgba(97, 91, 172, 0.6) !important;
+        border: 2px rgba(52, 111, 221, 0.658) solid !important;
+        padding-top:3px ;
+    }
+    .btn,
+    .btn:active,
+    .btn:focus,
+    .btn:visited{
+        background-color: rgba(255, 255, 255, 0.8)!important;
+        width: 300px;
+        height: 120px;
+        position: absolute;
+        top: 73%;
+        left: 50%;
+        transform: translate(-50%,0);
+        border: 2px rgba(97, 65, 17,0.8) double !important;
+        border-width: 12px !important;
+        font-size: 25px;
+        font-weight: 800;
+        font-family: "黑体",'Courier New', Courier, monospace !important;
+        color: #000 !important;
+    }
+    .btn:hover{
+        background-color: rgba(97, 65, 17,0.8) !important;
+        border: 3px rgba(97, 65, 17,0.8) double !important;
+        color: #fff !important;
+        transition: all 0.25s;
+    }
+    .guide{
+        z-index: 100;
+        background-color: rgba(255, 255, 255, 0.8);
+        width: 100px;
+        height: 250px;
+        position: sticky;
+        bottom: 50px;
+        left: 1700px;
+        display: none;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        border: 1px #000 solid;
+    }
+    .guide_item{
+        cursor: pointer;
+    }
+    .back {
+        z-index: 2;
+        position: absolute;
+        top: 859px;
+        left: 0px;
+        height: 1058px;
+        width: 100%;
+        background:rgba(80, 79, 79, 0.6)no-repeat;
+        display: none;
+        justify-content: center;
+        align-items: center;
+    }
+    .tips{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 900px;
+        height: 600px;
+        background-color: white;
+    }
+    #encrypto{
+        width: 100vw;
+        height:1258px;
+        margin-top: 30px;
+        position: relative;
+        opacity: 0.70;
+        overflow: hidden;
+    }
+    #encrypto_bg{
+        position: absolute;
+        top: 100px;
+        left: 0;
+        width: 100%;
+        height: 103%;
+        filter: blur(8px);
+    }
+
+    .upload_box{
+        width: 780px;
+        height: 700px;
+        border: 1px #ffe solid;
+        border-radius: 3px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        background-color: rgba(99, 98, 96, 0.3);
+        z-index: 1;
+    }
+    #upload_box_head{
+        width: 100%;display: flex;justify-content: space-around
+    }
+    #upload_box_head img{
+        width: 45px;
+        height: 30px;
+    }
+    .left_arrow{
+        margin-left: 35px;
+    }
+    .right_arrow{
+        margin-right: 35px;
+    }
+    .upload_box span{
+        cursor: pointer;
+    }
+    /* #uplode_window, */
+    .el-upload-dragger{
+        width: 730px !important;
+        height: 500px !important;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+    .el-upload__text{
+        font-size: 22px !important;
+    }
+    .el-carousel__item h3 {
+        color: #475669;
+        font-size: 18px;
+        opacity: 0.75;
+        line-height: 300px;
+        margin: 0;
+    }
+      
+    .el-carousel__item:nth-child(2n) {
+        background-color: #99a9bf;
+    }
+    
+    .el-carousel__item:nth-child(2n+1) {
+        background-color: #d3dce6;
+    }
+    form{
+        width: 80%;
+        height: 50%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+    }
+    #id_filename{
+        padding-left: 35px;
+        padding-top: 8px ;
+        border: 2px #bbb solid;
+        border-radius: 3px;
+        box-shadow: #ddd 3px 3px 3px 0;
+        height: 70px;
+        margin-top: 15px;
+        margin-bottom: 15px;
+        align-self: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        background-color: rgba(175, 172, 172, 0.3);
+        font-size: 17px;
+        font-weight: 600;
+    }
+    #id_filename:hover{
+        opacity: 0.75;
+    }
+    #id_wm_str{
+        width: 100%;
+        line-height: 28px;
+        font-size: 19px;
+        align-self: center;
+        text-align: center;
+    }
+    .content {
+        position: absolute;
+        display: none;
+        padding: 10px;
+        width: 160px;
+        background: #e0edf7;
+        border-radius: 6px;
+        font-size: 15px;
+        font-weight: 500;
+    }
+
+    .content::before {
+        content: "";
+        position: relative;
+        top: -20px;
+        left: 10px;
+        width: 0;
+        height: 0;
+        display: block;
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+        border-bottom: 10px solid #e0edf7;
+    }
+    #submit_btn{
+        width: 15%;
+        align-self: center;
+    }
+
+    .login_form_wrap{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    }
+    .bg_wrap{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        /* border: 3px red solid; */
+        background-color: #999;
+        opacity: 0.55;
+        display: none;
+    }
+    .login_form{
+        height: 60%;
+        width: 23%;
+        background-color: white;
+        box-shadow: rgb(105, 96, 124) 5px 5px 5px 2px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        border-radius: 15px;
+        overflow: hidden;
+        position: relative;
+        z-index: 0;
+    }
+    #close_login_form{
+        background-color: rgb(115,203,234);
+        transform: scale(0.8);
+        border-radius: 50px;
+        padding: 1px;
+        border: 1px black solid;
+        font-weight: 800;
+        cursor: pointer;
+        position: absolute;
+        right: 2%;
+        top: 1.2%;
+        z-index: 1;
+    }
+    .login_form img{
+        width: 100%;
+        height: 11%;
+    }
+    .line{
+        height: 1px;
+        background-color: rgb(47, 46, 48);
+        width: 70%;
+        z-index: 1;
+        transform: translateY(-15PX);
+    }
+    .login_form span{
+        font-size: 22px;
+        font-weight: 800;
+        margin-top: 15px;
+        color: rgb(29, 13, 109);
+        background-color: white;
+        border-left:10px white solid;
+        border-right:10px white solid;
+        z-index: 2;
+    }
+    .login_form form{
+        padding-top: 10px;
+        width: 73%;
+        height: 67%;
+        display: flex;
+        flex-flow: row wrap;
+    }
+    .login_form>form>input{
+        margin-top: 25px;
+        width: 100%;
+        height: 30px;
+        font-size: 17px;
+        padding-left: 7px;
+        align-self: flex-start;
+        border-radius: 5px;
+        border: 1px solid rgb(209,209,209);
+    }
+    #rem_checkbox{
+        transform: translateY(75px);
+        font-size: 10px;
+        padding-left: 25px;
+    }
+    #rem_tip{
+        color: #bbb;margin-left: 10px;font-size: 12px;
+    }
+    #login_btns{
+        width: 100%;
+        padding: 0 25px;
+        align-self: flex-end;
+        margin-top: 15px;
+        display: flex;
+        justify-content: space-between;
+    }
+    #login_btns input{
+        width: 85px;
+        height: 35px;
+        background-color: rgb(0,167,222);
+        color: white;
+    }
+    #login_btns input:hover{
+        background-color: rgb(0,190,231);
+    }
+    #login_btns button{
+        width: 105px;
+        height: 35px;
+        background-color: white;
+        color: #111;
+    }
+    #login_btns button,
+    #login_btns input{
+        border: 1px rgb(87, 87, 90) solid;
+        border-radius: 2px;
+        cursor: pointer;
+        font-size: 15px;
+        font-weight: 500;
+    }
+    </style>
 </head>
-
-<style> 
-    .warning{color:#F00} 
-</style> 
-
 <body>
-    <h1>上传数字作品来解析水印</h1>
-    <form method="post" enctype="multipart/form-data" >
-        <p>选择要解析水印的文件：</p>
-        {{ form.filename }}
-        <input type="submit" value="Submit" />
-    </form>
+    <div id="app" style="background-color: rgba(231, 196, 121, 0.226);width: 100%;height: 2100px;">
+        <span id="top" name="top"></span>
+        <!-- vue部分 -->
+        <el-menu class="el-menu-demo" mode="horizontal" style="background-color: rgba(255, 255, 255, 1) !important;"
+        background-color="rgba(255,255,255,0)" active-text-color="rgba(77,115,209,0.5)" text-color="rgb(0,0,0)" default-active="2">
+                <span>img</span>
+                <el-menu-item class="main_menu_item" style="margin-left:30px;" index="1"><a href="{% url 'server:encodeindex' %}">添加数字水印</a></el-menu-item>
+                <el-menu-item class="main_menu_item"  index="2"><a href="{% url 'server:decodeindex' %}">查看数字水印</a></el-menu-item>
+                <el-menu-item class="main_menu_item"  index="3"><a href="{% url 'server:teamindex' %}">关于我们</a></el-menu-item>
+                {% if is_login %}
+                <el-menu-item class="main_menu_item" style="margin-right: 100px;margin-left: 100px;" index="4"><a href="/login/">登录</a></el-menu-item>
+                {% else %}
+                <el-menu-item class="main_menu_item" style="margin-right: 100px;margin-left: 100px;" index="4"><a href="/logout/">登出</a></el-menu-item>
+                {% endif %}
+        </el-menu>
+        <div class="wrap_border">
+            <div class="wrap"></div>
+        </div>
+        <el-button plain class="btn">
+            加密介绍
+        </el-button>
+        <!-- 蒙版 -->
+        <div class="back">
+            <!-- <div class="top"></div> -->
+            <div class="tips">
+                <el-button style="align-self: flex-end;margin-right: 45px;margin-top: -25px;" @click="close_tips">我已经知道了~~</el-button>
+                <div style="width:100%;">
+                    <h2 style="text-align: center;margin-bottom: 15px;">上 传 指 导</h2>
+                    <el-carousel arrow="always" height='450px'>
+                        <el-carousel-item v-for="item in 3" :key="item" >
+                        </el-carousel-item>
+                        <el-carousel-item  :key="4" style="display: flex;justify-content: flex-end;align-items: flex-end;">
+                            <el-button style="margin-bottom: 35px;margin-right: 80px;" @click="close_tips">12345</el-button>
+                        </el-carousel-item>
+                    </el-carousel>
+                </div>
+            </div>
+        </div>
+        <span name="encrypto" id="encrypto_span"></span>
+        <div id="encrypto">
+            <img id="encrypto_bg" src="../../static/server/image/img3.jpg" alt="">
+            <div id="teach_area" style="display:flex;justify-content:center;align-items: center;height: 100%;z-index: 1;">
+                <div class="upload_box">
+                    <div id="upload_box_head">
+                        <span><img class="left_arrow" src="../../static/server/image/left.png" alt=""></span>
+                        <h1 id="words" style="color: rgb(93, 94, 131);transform: translateY(-25px);">图 片 水 印 解 密</h1>
+                        <span><img class="right_arrow" src="../../static/server/image/right.png" alt=""></span>
+                    </div>
+                 
+                    <!-- <h2 style="position: relative;top: -70px;">上传您的数字作品来添加水印</h2> -->
+                    <!-- <h1>上传数字作品来解析水印</h1> -->
+                    <form method="post" enctype="multipart/form-data" >
+                        <p>选择要解析水印的文件：</p>
+                        {{ form.filename }}
+                        <input id="submit_btn" type="submit" value="Submit" />
+                    </form>
 
-    {% if unsupport_type %}
-    <div class='warning'>{{message}}</div>
-    {% endif %}
+                    {% if unsupport_type %}
+                    <div class='warning'>{{message}}</div>
+                    {% endif %}
 
+                </div>
+            </div>
+        </div>
+        <span id="bottom" name="bottom"></span>
+        <div class="guide">
+            <span class="guide_item" id="toTop">123456</span>
+            <span class="guide_item" id="toEncrypto">888888</span>
+            <span class="guide_item" id="toBotton">444444</span>
+        </div>
 
+        <!-- 加密介绍弹窗 -->
+        <div class="login_form_wrap">
+            <div class="bg_wrap"></div>
+            <div class="login_form">
+                <img src="./image/login_header.png" alt="">
+                <i id="close_login_form" class="el-icon-close"></i>
+                <span>介 绍</span>
+                <div class="line"></div>
+                <p>算法介绍</p>
+                <p>xxxxxxxxxxxxxxxxxxxxxxxxxxxx</p>
+                <p>xxxxxxxxxxxxxxxxx</p>
+                <p>xxxxxxxxxxxxxxxxx</p>
+                <p>xxxxxxxxxxxxxxxxx</p>
+                <p>xxxxxxxxxxxxxxxxx</p>
+                <p>xxxxxxxxxxxxxxxxx</p>
+                <p>xxxxxxxxxxxxxxxxx</p>
+                <!-- <form action="">
+                    <input type="text" name="username" id="username" placeholder="用户名">
+                    <input style="transform: translateY(-25px);" type="password" name="password" id="password" placeholder="密码">
+                    <label id="rem_checkbox">
+                        <label><input type="checkbox" style="margin-right: 8px;font-size: 12px;"></label>
+                        记住我
+                        <span id="rem_tip">不是自己的电脑上不要勾选此项</span>
+                    </label>
+                    <div id="login_btns">
+                        <input type="submit" value="登录">
+                        <button>立即注册</button>
+                    </div>
+                </form> -->
+            </div>
+        </div>
+
+    </div>
 </body>
+
+<script>
+    new Vue({
+        el: '#app',
+        data: function () {
+            return { 
+                visible: true,
+            }
+        },
+        methods:{
+            close_tips(){
+                console.log('123456');
+                $('.back').css("display","none");
+                $('body').css({  "overflow":'visible'});
+                $('.guide').css('display','flex');
+            },
+        }
+    })
+    let words = [
+        "图 片 水 印 解 密",
+        "视 频 水 印 解 密",
+        "音 频 水 印 解 密",
+    ]
+    var words_index = 0;
+    $('.left_arrow').on('click',function(){
+        words_index -= 1;
+        if(words_index < 0)
+            words_index = 2;
+        $('#words').html(words[words_index]);
+    })
+    $('.right_arrow').on('click',function(){
+        words_index += 1;
+        if(words_index > 2)
+            words_index = 0;
+        $('#words').html(words[words_index]);
+    })
+
+    $('#toTop').on('click',function(){
+        console.log("123456");
+        $('html , body').animate({scrollTop: $('#top').offset().top}, 300);
+    });
+    $('#toEncrypto').on('click',function(){
+        console.log("123456");
+        $('html , body').animate({scrollTop: $('#encrypto').offset().top + 180}, 300);
+    });
+    $('#toBotton').on('click',function(){
+        console.log("123456");
+        $('html , body').animate({scrollTop: $('#bottom').offset().top}, 300);
+    });
+    let scrListenerfunc = function() {
+        var obj = document.querySelector('#teach_area').getBoundingClientRect();
+        // console.log(obj);
+        if(obj.top <= -100 && obj.top >= -350){
+            $('body').css({  "overflow":'hidden' });
+            $('.back').css("display","flex");
+            // $('.guide').css('display','block');
+            // console.log($('.tip1').css("display"));
+            $(document).unbind('scroll',scrListenerfunc);
+        }
+        // if()
+    };
+    $(document).on('scroll',scrListenerfunc);
+    $('#uplode_window').on('click',function(){
+        $('.back').css("display","none");
+        $('body').css({"overflow":'visable'});
+    });
+
+
+    $("#id_wm_str").hover(function(){
+        var c = $("#id_wm_str");
+        var e = c.offset();
+        var a = e.left + 270;
+        var b = e.top - 710;
+        // alert(b);
+        $("#id_wm_str").next().css({left:a+"px",top:b+"px"}).show();
+    },
+    function(){
+        $("#id_wm_str").next().hide();
+    });
+
+
+    // 介绍弹窗
+    $('.btn').on('click',function(){
+        $('.login_form_wrap').css('display','flex');
+        $('.bg_wrap').css('display','block');
+    })
+    $('#close_login_form').on('click',function(){
+        $('.login_form_wrap').css('display','none');
+    })
+    $(".bg_wrap").click(function(){
+        console.log('123');
+        $('.login_form_wrap').css("display","none"); 			
+    });
+</script>
 </html>

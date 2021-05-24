@@ -11,7 +11,7 @@ class WaterMark:
     def __init__(self, password_wm=1, password_img=1, block_shape=(4, 4), cores=None):
         self.block_shape = np.array(block_shape)
         self.password_wm, self.password_img = password_wm, password_img  # 打乱水印和打乱原图分块的随机种子
-        self.d1, self.d2 = 36, 20  # d1/d2 越大鲁棒性越强,但输出图片的失真越大
+        self.d1, self.d2 = 60, 10  # d1/d2 越大鲁棒性越强,但输出图片的失真越大
 
         # init data
         self.img, self.img_YUV = None, None  # self.img 是原图，self.img_YUV 对像素做了加白偶数化
@@ -45,7 +45,7 @@ class WaterMark:
             self.img_shape = output_img_shape
             print("save to padding_imgs")
             print(os.getcwd())
-            cv2.imwrite('./img.jpg', output_img)
+            cv2.imwrite('./img.png', output_img)
         else:
             # 读入图片->YUV化->加白边使像素变偶数->四维分块
             self.img = cv2.imread(filename).astype(np.float32)
@@ -176,7 +176,7 @@ class WaterMark:
 
     def extract(self, filename, wm_shape, out_wm_name=None, mode='img'):
         self.wm_size = np.array(wm_shape).prod()
-        self.read_img(filename=filename)
+        self.read_img(filename=filename, padding=True)
 
         self.init_block_index()
 

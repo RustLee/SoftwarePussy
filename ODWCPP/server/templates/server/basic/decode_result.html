@@ -1,6 +1,64 @@
 <!DOCTYPE html>
 <head>
 <script type="text/javascript" src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<style>
+#title{
+  text-align: center;
+}
+
+.spinner {
+  margin: 100px auto;
+  width: 50px;
+  height: 60px;
+  text-align: center;
+  font-size: 10px;
+}
+ 
+.spinner > div {
+  background-color: #67CF22;
+  height: 100%;
+  width: 6px;
+  display: inline-block;
+   
+  -webkit-animation: stretchdelay 1.2s infinite ease-in-out;
+  animation: stretchdelay 1.2s infinite ease-in-out;
+}
+ 
+.spinner .rect2 {
+  -webkit-animation-delay: -1.1s;
+  animation-delay: -1.1s;
+}
+ 
+.spinner .rect3 {
+  -webkit-animation-delay: -1.0s;
+  animation-delay: -1.0s;
+}
+ 
+.spinner .rect4 {
+  -webkit-animation-delay: -0.9s;
+  animation-delay: -0.9s;
+}
+ 
+.spinner .rect5 {
+  -webkit-animation-delay: -0.8s;
+  animation-delay: -0.8s;
+}
+ 
+@-webkit-keyframes stretchdelay {
+  0%, 40%, 100% { -webkit-transform: scaleY(0.4) } 
+  20% { -webkit-transform: scaleY(1.0) }
+}
+ 
+@keyframes stretchdelay {
+  0%, 40%, 100% {
+    transform: scaleY(0.4);
+    -webkit-transform: scaleY(0.4);
+  }  20% {
+    transform: scaleY(1.0);
+    -webkit-transform: scaleY(1.0);
+  }
+}
+</style>
 <script>
 function fun(){
             //alert("进入函数")
@@ -24,6 +82,8 @@ function fun(){
                                         //document.getElementById('progtext').text("当前进度: " + str(progress))
                                         if (progress == '1'){
                                             $("#download").show();
+                                            $("#back").show();
+                                            $('.spinner').hide();
                                             document.getElementById("title").innerHTML = "已解析出数字水印，请点击下方的按钮下载"
                                             clearInterval(sitv);
                                         }
@@ -41,9 +101,19 @@ window.onload = function(){
 <body>
 <h1 id="title">正在解析数字水印</h1>
 
+<div class="spinner">
+    <div class="rect1"></div>
+    <div class="rect2"></div>
+    <div class="rect3"></div>
+    <div class="rect4"></div>
+    <div class="rect5"></div>
+</div>
+
 {% block branding %}
 <a id="download" href="{% url 'server:file_download' %}">下载</a>
+<a style="display: none;" id="back" href="{% url 'server:decodeindex' %}">返回</a>
 {% endblock %}
+
 
 
 </body>

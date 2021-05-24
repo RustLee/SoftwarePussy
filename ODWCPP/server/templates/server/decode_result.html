@@ -5,7 +5,9 @@
 #title{
   text-align: center;
 }
-
+a{
+  text-decoration:none;
+}
 .spinner {
   margin: 100px auto;
   width: 50px;
@@ -89,7 +91,7 @@ function fun(){
                                         }
                                     }
                                 });
-                            }, 2000);
+                            }, 4000);
         }
 window.onload = function(){
                     fun();
@@ -110,8 +112,10 @@ window.onload = function(){
 </div>
 
 {% block branding %}
-<a id="download" href="{% url 'server:file_download' %}">下载</a>
-<a style="display: none;" id="back" href="{% url 'server:decodeindex' %}">返回</a>
+<div style="display: flex;flex-direction: row;justify-content: center;align-items: center;">
+<a style="padding:10px;margin-right: 35px;border: 1px black solid;border-radius:2px" id="download" href="{% url 'server:file_download' %}">下载</a>
+<a style="display: none;padding:10px;border: 1px black solid;border-radius:2px" id="back" href="{% url 'server:decodeindex' %}">返回</a>
+<div>
 {% endblock %}
 
 

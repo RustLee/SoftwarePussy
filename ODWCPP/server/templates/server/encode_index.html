@@ -130,6 +130,7 @@
         width: 900px;
         height: 600px;
         background-color: white;
+        transform: translateY(-15%);
     }
     #encrypto{
         width: 100vw;
@@ -149,6 +150,7 @@
     }
 
     .upload_box{
+        position: relative;
         width: 780px;
         height: 700px;
         border: 1px #ffe solid;
@@ -396,8 +398,8 @@
         <!-- vue部分 -->
         <el-menu class="el-menu-demo" mode="horizontal" style="background-color: rgba(255, 255, 255, 1) !important;"
         background-color="rgba(255,255,255,0)" active-text-color="rgba(77,115,209,0.5)" text-color="rgb(0,0,0)" default-active="1">
-                <span>img</span>
-                <el-menu-item class="main_menu_item" style="margin-left:30px;" index="1"><a href="{% url 'server:encodeindex' %}">添加数字水印</a></el-menu-item>
+                <el-menu-item class="main_menu_item" style="margin-left:30px;" index="0"><a href="{% url 'login:index' %}">首页</a></el-menu-item>
+                <el-menu-item class="main_menu_item"  index="1"><a href="{% url 'server:encodeindex' %}">添加数字水印</a></el-menu-item>
                 <el-menu-item class="main_menu_item"  index="2"><a href="{% url 'server:decodeindex' %}">查看数字水印</a></el-menu-item>
                 <el-menu-item class="main_menu_item"  index="3"><a href="{% url 'server:teamindex' %}">关于我们</a></el-menu-item>
                 {% if is_login %}
@@ -420,11 +422,23 @@
                 <div style="width:100%;">
                     <h2 style="text-align: center;margin-bottom: 15px;">上 传 指 导</h2>
                     <el-carousel arrow="always" height='450px'>
-                        <el-carousel-item v-for="item in 3" :key="item" >
+                        <!-- <el-carousel-item v-for="item in 3" :key="item" >
+                        </el-carousel-item> -->
+                        <el-carousel-item  :key="1" style="display: flex;justify-content: center;align-items: center;">
+                            <img src="../../static/server/image/1.png" alt="">
+                        </el-carousel-item>
+                        <el-carousel-item  :key="2" style="display: flex;justify-content: center;align-items: center;">
+                            <img style="height:90%;width: 80%;" src="../../static/server/image/2.png" alt="">
+                        </el-carousel-item>
+                        <el-carousel-item  :key="3" style="display: flex;justify-content: center;align-items: center;">
+                            <img src="../../static/server/image/3.png" alt="">
                         </el-carousel-item>
                         <el-carousel-item  :key="4" style="display: flex;justify-content: flex-end;align-items: flex-end;">
-                            <el-button style="margin-bottom: 35px;margin-right: 80px;" @click="close_tips">12345</el-button>
+                            <el-button style="margin-bottom: 35px;margin-right: 80px;" @click="close_tips">开始加密！</el-button>
                         </el-carousel-item>
+                        <!-- <el-carousel-item  :key="5" style="display: flex;justify-content: flex-end;align-items: flex-end;">
+                            <el-button style="margin-bottom: 35px;margin-right: 80px;" @click="close_tips">开始加密！</el-button>
+                        </el-carousel-item> -->
                     </el-carousel>
                 </div>
             </div>
@@ -439,7 +453,10 @@
                         <h1 id="words" style="color: rgb(93, 94, 131);transform: translateY(-25px);">图 片 水 印 加 密</h1>
                         <span><img class="right_arrow" src="../../static/server/image/right.png" alt=""></span>
                     </div>
-                 
+                    
+                    <div style="position:absolute;width: 100%;top: 20%;left: 0;margin: -15px 12%;">
+                        <p id="inro" style="width: 580px;font-size: 18px;font-weight: 600;text-indent:2em;">介绍：图片加密基于DCT算法实现，通过对图片加入盲水印，在不影响图片质量的情况下实现版权保护，同时具备抗攻击能力，在图片遭受裁剪、污损等攻击情况下仍可以恢复水印，全方位保障您的作品安全。</p>
+                    </div>
                     <!-- <h2 style="position: relative;top: -70px;">上传您的数字作品来添加水印</h2> -->
                     <form method="post" enctype="multipart/form-data" style="font-weight: 600;font-size: 17px;">
                         <p>选择要添加水印的文件：</p>
@@ -478,9 +495,8 @@
         </div>
         <span id="bottom" name="bottom"></span>
         <div class="guide">
-            <span class="guide_item" id="toTop">123456</span>
-            <span class="guide_item" id="toEncrypto">888888</span>
-            <span class="guide_item" id="toBotton">444444</span>
+            <span class="guide_item" id="toTop">返回顶部</span>
+            <span class="guide_item" id="toEncrypto">文件上传</span>
         </div>
 
         <!-- 加密介绍弹窗 -->
@@ -489,16 +505,11 @@
             <div class="login_form">
                 <img src="./image/login_header.png" alt="">
                 <i id="close_login_form" class="el-icon-close"></i>
-                <span>介 绍</span>
+                <span>算 法 介 绍</span>
                 <div class="line"></div>
-                <p>算法介绍</p>
-                <p>xxxxxxxxxxxxxxxxxxxxxxxxxxxx</p>
-                <p>xxxxxxxxxxxxxxxxx</p>
-                <p>xxxxxxxxxxxxxxxxx</p>
-                <p>xxxxxxxxxxxxxxxxx</p>
-                <p>xxxxxxxxxxxxxxxxx</p>
-                <p>xxxxxxxxxxxxxxxxx</p>
-                <p>xxxxxxxxxxxxxxxxx</p>
+                <!-- <p style="font-size: 21px;font-weight: 800;margin-top: 20px;">算法介绍</p> -->
+                <p style="width: 80%;margin-top: 30px;text-indent:2em;">DCT域的图像水印嵌入与提取在信号的频域（变换域）中隐藏信息要比在时域中嵌入信息具有更好的鲁棒性。一副图像经过时域到频域的变换后，可将待隐藏信息藏入图像的的显著区域，这种方法比LSB以及其他一些时域水印算法更具抗攻击能力，而且还保持了对人类感官的不可察觉性。</p>
+                
                 <!-- <form action="">
                     <input type="text" name="username" id="username" placeholder="用户名">
                     <input style="transform: translateY(-25px);" type="password" name="password" id="password" placeholder="密码">
@@ -539,18 +550,26 @@
         "视 频 水 印 加 密",
         "音 频 水 印 加 密",
     ]
+    let intros = [
+        '介绍：图片加密基于DCT算法实现，通过对图片加入盲水印，在不影响图片质量的情况下实现版权保护，同时具备抗攻击能力，在图片遭受裁剪、污损等攻击情况下仍可以恢复水印，全方位保障您的作品安全。',
+        '视频：在图像加密的基础上，实现对视频的数字水印技术，解决视频类作品的版权保护问题。由于计算资源限制，现阶段暂时只支持短视频的数字水印添加和解析，期待后续开发为长视频的版权保护提供支持。',
+        '使用前沿音频水印技术为音频添加数字水印，防止音频数字作品被未授权者擅自盗用、篡改、占用。水印的添加基本不影响原音频的使用。由于技术的尚未成熟，过长的音频处理时间可能较长，请耐心等待。使用前沿音频水印技术为音频添加数字水印，防止音频数字作品被未授权者擅自盗用、篡改、占用。水印的添加基本不影响原音频的使用。由于技术的尚未成熟，过长的音频处理时间可能较长，请耐心等待。',
+    ]
     var words_index = 0;
+    var intros_index = 0;
     $('.left_arrow').on('click',function(){
         words_index -= 1;
         if(words_index < 0)
             words_index = 2;
         $('#words').html(words[words_index]);
+        $('#inro').html(intros[words_index]);
     })
     $('.right_arrow').on('click',function(){
         words_index += 1;
         if(words_index > 2)
             words_index = 0;
         $('#words').html(words[words_index]);
+        $('#inro').html(intros[words_index]);
     })
 
     $('#toTop').on('click',function(){

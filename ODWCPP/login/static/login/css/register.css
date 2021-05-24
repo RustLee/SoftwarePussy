@@ -1,6 +1,7 @@
 body {
   height: 100%;
   background-image: url('../image/bg.jpg');
+  opacity: 0.5;
 }
 .form-register {
   width: 100%;
